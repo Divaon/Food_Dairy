@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]> <html class="lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]> <html class="lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Registration Form</title>
+  <link rel="stylesheet" href="style.css">
+  <!--[if lt IE 9]><script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+</head>
+<body>
+
+
+<!-- pol==1 male pol=0 is female -->
+
+<div class="wrapper">
+  <h1 class="register-title">Welcome</h1>
+  <div class="register">
+
+    <div>
+      <input type="submit" value="Login" id="return" class="login-button">
+    </div>
+
+
+  <div>
+    <label for="nick">Выберите ник</label>
+    <input type="nick" id="nick"  class="register-input" placeholder="Username">
+  </div>
+  <div>
+    <label for="password">Выберите пароль</label>
+    <input type="password" id="password" class="register-input" placeholder="Password">
+  </div>
+  <div>
+    <label for="weight">Укажите свой вес</label>
+    <input type="weight" id="weight" class="register input" placeholder="Weight">
+  </div>
+  <div>
+    <label for="rost">Укажите свой рост</label>
+    <input type="rost" id="rost" class="register input" placeholder="Rost">
+  </div>
+  <div>
+    <label for="age">Укажите свой возраст</label>
+    <input type="age" id="age" class="register input" placeholder="Age">
+  </div>
+    <!-- <input type="checkbox" id="pol" class="register input" placeholder="Pol(put if you male)"> -->
+  </div>
+
+<div>
+  <label>Выберите свой пол</label>
+  <input type="radio" name="pol" id="pol1" class="register input" value="1" checked>
+  <label for="pol1">Мужской</label>
+  <input type="radio" name="pol" id="pol2" class="register input" value="0">
+  <label for="pol2">Женский</label>
+</div>
+    <input type="submit" value="Create Account"  id="registering" class="register-button">
+
+  <script language="JavaScript" src="registerpage.js"></script>
+
+    </div>
+    
+
+</body>
+</html>
