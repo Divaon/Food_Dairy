@@ -15,30 +15,33 @@
 <body>
   <div class="wrapper">
     <form action="/home_page">
-        <button type="button" id="home_page"  class="btn">Home page</button>
+        <button type="button" id="home_page"  class="btn">Домашняя страница</button>
     </form>
     <p class="name" id="status">Calories today:</p>
 
 
+    <div class="inputuserfood" hidden="false">
+      <label>Добавления в базу данных вышего продукта</label>
+      <input type="name" id="foodname" class="login-input" placeholder="Имя">
+      <input type="name" id="foodcalories" class="login-input" placeholder="Калорийност  на 100 грамм">
+      <input type="submit" value="Добавить новый продукт" id="addnewfood" class="login-button">
+    </div>
 
-    <input type="name" id="foodname" class="login-input" placeholder="Name">
-    <input type="name" id="foodcalories" class="login-input" placeholder="Caloriess">
-    <input type="submit" value="AddnewFood" id="addnewfood" class="login-button">
 
-
-    <div class="chooseactivity">
+    <!-- <div class="chooseactivity">
         <select name="activity_choose" id="activity_select">
           <option value="anons">Anons</option>
-        </select>
+        </select> 
         <input type="activitytyme" id="activity_tyme" class="login-input" placeholder="Activity minutes">
         <input type="submit" value="Add in dairy" id="inputactivity" class="btn">
       </div>
       <div class="informational">
         <p class="name" id="caloriesoutput">Calories for 100g = </p>
-      </div>
+      </div> -->
 
       <!-- <a href="https://buy.stripe.com/test_14keWo6xj44Agko000">Pay on payment page</a> -->
-      <button type="button" id="pay_page"  class="btn">Pay on payment page</button>
+      <p></p>
+      <button type="button" id="pay_page"  class="btn" hidden="false">Pay on payment page</button>
 
     <script language="JavaScript" src="podpiska.js"></script>
     

@@ -48,43 +48,37 @@ app.put("/api/userage", jsonParser, function(req, res){
 });
 
 
+// "api/updatepassword"
 
-
-app.get("/api/users", function(req, res){
-       
-    const content = fs.readFileSync(filePath,"utf8");
-    const users = JSON.parse(content);
-    res.send(users);
-});
-// получение одного пользователя по id
-app.get("/api/users/:id", function(req, res){
-    // console.log("User by id");
-    const id = req.params.id; // получаем id
-    const content = fs.readFileSync(filePath, "utf8");
-    const users = JSON.parse(content);
-    let user = null;
-    // находим в массиве пользователя по id
-    for(var i=0; i<users.length; i++){
-        if(users[i].id==id){
-            user = users[i];
-            break;
+// изменение пароля пользователя
+app.put("/api/updatespassword", jsonParser, function(req, res){
+    if(!req.body) return res.sendStatus(400);
+    const name= req.body.name;
+    const password = req.body.password;
+    const oldpassword= req.body.oldpassword;
+    console.log("We was here really")
+    console.log(name, password, oldpassword)
+    console.log("check check check")
+    cursors.query("UPDATE public.user SET password=$1	WHERE name = $2 and password = $3;",
+     [oldpassword, name,    password], function(err, result){
+        if (err){
+            console.log("Hi problem /api/updatepassword")
+            return console.log(err)
         }
-    }
-    // отправляем пользователя
-    if(user){
-        res.send(user);
-    }
-    else{
-        res.status(404).send();
-    }
+
+    })
+    res.send();
 });
+
+
+
+
+
+
 // получение одного пользователя по name
 app.get("/api/user/:name", function(req, res){
     // console.log("User by name")  ;
     const name = req.params.name; 
-
-
-
     let getthisuser = null;
     cursors.query("SELECT id, name, password, weight, podpiska	FROM public.user where name = $1;", [name], function(err, result){
         if (err){
@@ -123,6 +117,7 @@ app.get("/api/us/:m" , function(req, res){
     const password=m[1]; 
     console.log(name, password)
     let getthisuser = null;
+    console.log(name, password)
     cursors.query("SELECT id, name, password, weight, podpiska FROM public.user where name = $1 and password = $2;", 
     [name, password], function(err, result){
         if (err){
@@ -166,10 +161,11 @@ app.post("/api/users", jsonParser, function (req, res) {
     const userPol = req.body.userpol
     const podpiska=req.body.userpodpiska;
     const age=req.body.userage;
+    const aim='Null'
 
 
-    cursors.query("Insert Into public.user(name, password, weight, rost, pol, podpiska, age) values ($1, $2, $3, $4, $5, $6, $7);", 
-    [userName, password, userWeight, userRost, userPol,  podpiska, age], function(err, result){
+    cursors.query("Insert Into public.user(name, password, weight, rost, pol, podpiska, age, aim) values ($1, $2, $3, $4, $5, $6, $7, $8);", 
+    [userName, password, userWeight, userRost, userPol,  podpiska, age, aim], function(err, result){
         if (err){
             console.log("Hi problem /api/users isert user")
             console.log(age)
@@ -242,7 +238,7 @@ app.put("/api/usersrost", jsonParser, function(req, res){
     if(!req.body) return res.sendStatus(400);
     const name= req.body.name;
     const rost = req.body.rost;
-    console.log("We get be here?");
+    // console.log("We get be here?");
     cursors.query("UPDATE public.user SET rost=$1 WHERE name = $2;",
      [rost, name], function(err, result){
         console.log("HHHH");
@@ -254,14 +250,38 @@ app.put("/api/usersrost", jsonParser, function(req, res){
         }
         else
         {
-            console.log("And what");
+            // console.log("And what");
             console.log(result);
         }
     })
     res.send();
-
 });
    
+
+// изменение цели пользователя
+app.put("/api/usersaim", jsonParser, function(req, res){
+       
+    if(!req.body) return res.sendStatus(400);
+    const name= req.body.name;
+    const aim = req.body.aim;
+    // console.log("We get be here?");
+    cursors.query("UPDATE public.user SET aim=$1 WHERE name = $2;",
+     [aim, name], function(err, result){
+        console.log("HHHH");
+        console.log(err);
+        console.log(result);
+        if (err){
+            console.log("Hi problem /api/usersrost")
+            return console.log(err)
+        }
+        else
+        {
+            // console.log("And what");
+            console.log(result);
+        }
+    })
+    res.send();
+});
 
 
 
@@ -272,7 +292,7 @@ app.get("/api/usersinfo/:name", function(req, res){
     let user = null;
 
 
-    cursors.query("SELECT id, name, password, weight, rost, pol ,podpiska, age FROM public.user where name = $1", 
+    cursors.query("SELECT id, name, password, weight, rost, pol ,podpiska, age, aim FROM public.user where name = $1", 
     [name], function(err, result){
         if (err){
             console.log("Hi problem /api/usersinfo/:name")
@@ -291,6 +311,74 @@ app.get("/api/usersinfo/:name", function(req, res){
 });
 
 
+// app.get("/api/us/:m" , function(req, res){
+
+// получение пользователя для изменения пароля поиск
+app.get("/api/founduser/:m", function(req, res){
+    console.log("/api/founduser");
+
+
+    const m =JSON.parse(req.params.m);
+    const name = m[0]; 
+    const age=m[1]; 
+    const pol=m[2]*0.0;
+    const password=m[3];
+
+    console.log(name[0])
+
+    cursors.query("SELECT id, password FROM public.user where name = $1 and age = $2 and pol = $3", 
+    [name, age, pol], function(err, result){
+        if (err){
+            console.log("Hi problem /api/foodtypes/")
+            return console.log(err)
+        }
+        else
+        {   
+            // console.log("lkoijuhygtfdfghjklkjhgfds")
+            // console.log(typeof(name), typeof(age), typeof(pol), password)
+            // console.log(result.rows)
+            // console.log(result)
+
+            console.log("hmmmmmmn")
+            console.log(result.rowCount)
+
+            if (result.rowCount == 0)
+            {
+                console.log("qwertyuiop[]asdfghjkl;'zxcvbnm,./")
+                const temp=false
+                const m=JSON.stringify(temp)
+                res.send(m)
+            }
+            else
+            {
+                // UPDATE public."user"	SET id=?, name=?, password=?, weight=?, rost=?, pol=?, podpiska=?, age=?, aim=?	WHERE <condition>;
+                console.log("147258369147258369")
+                cursors.query("UPDATE public.user SET password = $1 WHERE name = $2;",
+                [password, name], function(err, result){
+                   if (err){
+                       console.log("Hi problem /api/users")
+                       return console.log(err)
+                   }
+                   else
+                   {
+                        console.log("Heeloo")
+                        const temp=true
+                        const m=JSON.stringify(temp)
+                        res.send(temp)
+                   }
+                })
+            }
+
+            }
+
+        })
+});
+
+
+
+
+
+
 
 // получение типов еды исключая пользовательский
 app.get("/api/foodtypes/", function(req, res){
@@ -304,11 +392,7 @@ app.get("/api/foodtypes/", function(req, res){
         }
         else
         {   
-            // console.log("And Select give me")
-            // console.log(result.rows)
-            // console.log("And we send it")
             res.send(result.rows)
-
         }
     })
 
@@ -319,7 +403,7 @@ app.get("/api/foodtypes/", function(req, res){
 
 // получение определенного типа еды исключая пользовательский
 app.get("/api/foods/:id", function(req, res){
-    console.log("We try found food");
+    // console.log("We try found food");
     let type_id = req.params.id;
     cursors.query("SELECT id, name, calories, opisanie FROM public.food where id_type= $1", 
     [type_id], function(err, result){
@@ -401,7 +485,7 @@ app.get("/api/getfoodportionsid/:id", function(req, res){
 app.get("/api/getallfoods", function(req, res){
     console.log("We want all food");
     let user = null;
-    cursors.query("SELECT id, calories FROM public.food", 
+    cursors.query("SELECT id, calories, name FROM public.food", 
     function(err, result){
         if (err){
             console.log("Hi problem /api/getfoodportions")
@@ -581,7 +665,6 @@ import Stripe from 'stripe'
 
 dotenv.config();
 const secretKey = process.env.STRIPESECRETKEY;
-
 const stripe2 = Stripe(publickKey);
 
 
@@ -710,7 +793,7 @@ app.get("/api/changepopdpiska/:id", function(req, res){
     console.log("And user id="+ id)
     console.log(id)
 
-    cursors.query("UPDATE public.user SET podpiska=1WHERE id = $1;",
+    cursors.query("UPDATE public.user SET podpiska=1 WHERE id = $1;",
     [id], function(err, result){
        if (err){
            console.log("Hi problem /api/users")

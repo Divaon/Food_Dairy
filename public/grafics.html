@@ -2,6 +2,7 @@
 <html lang="en">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width/;lkjhg, initial-scale=1.0">
+  
   <title>Music Player | CodingNepal</title>
 <!-- 
   <meta name="google-signin-client_id" content="YOUR_CLIENT_ID.apps.googleusercontent.com"> -->
@@ -9,13 +10,18 @@
   <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous"> -->
     
+  <!-- <style type="text/css">
+    nav ul{height: 10xp; width: 5px;}
+    nav ul{overflow: hidden; overflow-y: scroll;}
+  </style>   -->
 
+  <!-- <link rel="stylesheet" href="style.css"> -->
 
-  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"> -->
 <body>
   <div class="wrapper">
     <form action="/home_page">
-        <button type="button" id="home_page"  class="btn">Home page</button>
+        <button type="button" id="home_page"  class="btn">Предыдушая страница</button>
     </form>
 
 
@@ -31,13 +37,25 @@
 
       </div>
 
-    <script language="JavaScript" src="grafics.js"></script>
 
-    <p class="name" id="caloriestoday">Calories today:</p>
-    <p class="name" id="caloriesactivitytoday">Activity used calories:</p>
-    <p class="name" id="aims">Calories today:</p>
+
+    <p class="name" id="caloriestoday">Калории за сегодня:</p>
+    <p class="name" id="caloriesactivitytoday">Вы потратили активной деятельностью калорий:</p>
+    <p class="name" id="aims">Калории сегодня:</p>
 
   </div>
 
+
+  <ul id="allfood" class="allfood" style="height: 100px; width: 300px; overflow: hidden; overflow-y: scroll; ">
+
+  </ul>
+
+  <ul id="allactivity" class="allactivity" style="height: 100px; width: 300px; overflow: hidden; overflow-y: scroll; ">
+
+  </ul>
+
+
 </body>
+
+<script language="JavaScript" src="grafics.js"></script>
 </html>

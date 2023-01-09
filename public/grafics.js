@@ -20,11 +20,16 @@ home_page.addEventListener("click", ()=>{
 
 
 var foodobject= {};
+var foodnameobject={}
 
 foodobject=JSON.parse(localStorage.getItem('allfood'))
 // allactivity
 activityobject=JSON.parse(localStorage.getItem('allactivity'))
-
+// localStorage.setItem('allactivity', JSON.stringify(result))
+// localStorage.setItem('allactivity1', JSON.stringify(result))
+activityobject1=JSON.parse(localStorage.getItem('allactivity1'))
+// 'allnamefood'
+foodnameobject=JSON.parse(localStorage.getItem('allnamefood'))
 // localStorage.setItem('alluserfood', JSON.stringify(result))
 fooduserobject=JSON.parse(localStorage.getItem('alluserfood'))
 
@@ -179,14 +184,29 @@ async function GetFoodWeek(userid) {
         headers: { "Accept": "application/json" }
     });
     if (response.ok === true) {
+
+        namemonth=[" января", " февраля", " марта", " апреля", " мая", " июня", " июля", " августа", " сентября", " октебря", " ноября", " декабря"]
+
         // console.log("responce is ok")
         const user = await response.json();
         // console.log(user)
         now = new Date();
         now.setDate(now.getDate()-6)
+        month=now.getMonth();
+        finalemonth=namemonth[month]
+
         for (let i=0; i<7; i++)
         {
-            myweekfoodcalories[now.getDate()] = 0;
+            
+        }
+
+
+
+
+        for (let i=0; i<7; i++)
+        {
+            myweekfoodcalories[String(now.getDate())+finalemonth] = 0;
+            // console.log(myweekfoodcalories);
 
             for (let j=0; j<user.length; j++)
             {   
@@ -206,11 +226,15 @@ async function GetFoodWeek(userid) {
                         calories=user[j].weight*fooduserobject[user[j].food_id]/100
                         // console.log("Нас здесь покат не должно быть")
                     }
-                    myweekfoodcalories[now.getDate()] = myweekfoodcalories[now.getDate()]+calories ;
+                    newlegendname=String(now.getDate())+finalemonth
+                    myweekfoodcalories[now.getDate()+finalemonth] = myweekfoodcalories[now.getDate()+finalemonth]+calories ;
                 }
+
 
             }
             now.setDate(now.getDate()+1)
+            month=now.getMonth();
+            finalemonth=namemonth[month]
         }
         // console.log('Result')
         // console.log(myweekfoodcalories)
@@ -293,7 +317,7 @@ GetUserId(nicknames).then(
             var myBarchart = new Barchart(
                 {
                     canvas:weekfoodgr,
-                    seriesName:"Weeek food calories",
+                    seriesName:"Калории за неделю",
                     padding:20,
                     gridScale:100,
                     gridColor:"#eeeeee",
@@ -317,22 +341,12 @@ GetUserId(nicknames).then(
             {
             mydayfoodcalories=result;
             var caloriestd=document.querySelector("#caloriestoday");
-            caloriestd.innerText="You eat today calories on = "+mydayfoodcalories["today"];
-
-            // alert("Day calories go in")
-            // console.log("asdfghjkl;qwertyuiop")
-            // console.log(mydayfoodcalories)
-
-            // var myweekfoodcalories = {
-            //     "1": 7,
-            //     "3": 9,
-            //     "6": 12
-            // };
+            caloriestd.innerText="Сегодня вы сьели калорий в количестве = "+mydayfoodcalories["today"];
 
             var myBarchart = new Barchart(
                 {
                     canvas:dayfoodgr,
-                    seriesName:"Day food calories",
+                    seriesName:"Калории за сегодня",
                     padding:20,
                     gridScale:100,
                     gridColor:"#eeeeee",
@@ -384,13 +398,13 @@ async function UserInfo(name) {
         console.log(user[0].pol)
         // alert(cc)
         // alert(cc1)
-        if (cc<1500)
+        if (cc<1000)
         {
-            text='We cant calculate. Check your info';
+            text='Мы не смогли посчитать. Проферте информацию о себе.';
         }
         else
         {
-            text='Withoun activities: to keeep weight need '+cc+" and to start lose weight need "+cc1;
+            text='Без активности: чтобы держать вес нужно потреблять в среднеем '+cc+" и чтобы начать терять вес нужно потреблять "+cc1;
         }
         // return text;
         var aims=document.querySelector("#aims");
@@ -414,17 +428,8 @@ GetUserId(nicknames).then(
             {
             mydayfoodcalories=result;
             var caloriesacttd=document.querySelector("#caloriesactivitytoday");
-            alert(mydayfoodcalories)
-            caloriesacttd.innerText="You spend calories today calories on = "+mydayfoodcalories["today"];
-
-            // alert("Day calories go in")
-            // console.log("asdfghjkl;qwertyuiop")
-            // console.log(mydayfoodcalories)
-
-            // var myweekfoodcalories = {
-            //     "1": 7,
-            //     "3": 9,
-            //     "6": 12
+            // alert(mydayfoodcalories)
+            caloriesacttd.innerText="Сегодня вы потратити калорий в количестве = "+mydayfoodcalories["today"].toFixed(2);
 
             }
         )
@@ -462,5 +467,120 @@ async function GetActivityiesDay(userid) {
         }
 
         return mydayfoodcalories
+    }
+}
+
+
+
+
+ulelement=document.querySelector('.allfood')
+var user_id=localStorage.getItem('userid');
+
+
+GetFoodsinul(user_id)
+async function GetFoodsinul(userid) {
+    const response = await fetch("/api/getfoodportionsid/"+userid, {
+        method: "GET",
+        headers: { "Accept": "application/json" }
+    });
+    if (response.ok === true) {
+        
+        const user = await response.json();
+        console.log("l;OKJHGFHD")
+        console.log(foodnameobject)
+        console.log(foodobject)
+
+        for (j=0; j<user.length; j++)
+        {
+            let lielement=document.createElement('li');
+            date=new Date(user[j].dates)
+            let name=""
+            calories=0
+            if (user[j].type == "norm")
+            {
+                calories=user[j].weight*foodobject[user[j].food_id]/100
+                name=foodnameobject[user[j].food_id]
+            } 
+            else
+            {
+                calories=user[j].weight*fooduserobject[user[j].food_id]/100
+                name=fooduserobjectp[user[j].food_id].name
+            }
+
+            temp1=date.getDate()
+
+            temp2=date.getMonth()+1
+            temp3=date.getFullYear()
+            if (temp1<10)
+            {
+                temp1='0'+temp1
+            }
+            if (temp2<10)
+            {
+                temp2='0'+temp2
+            }
+            d=temp1+'.'+temp2+'.'+temp3
+
+            const text="Вы съели "+name+" весом " +user[j].weight+" грамм, с итоговой каларийностью "+calories+ " и дата тогда была "+d
+            lielement.innerHTML=text;
+            ulelement.append(lielement);
+            let pelement=document.createElement('p');
+            ulelement.append(pelement);
+        }
+
+
+        return
+    }
+}
+
+
+
+
+ulelement2=document.querySelector('.allactivity')
+
+
+GetActivityiesinul(user_id)
+async function GetActivityiesinul(userid) {
+    const response = await fetch("/api/getactivityportionsid/"+userid, {
+        method: "GET",
+        headers: { "Accept": "application/json" }
+    });
+    if (response.ok === true) {
+        const user = await response.json();
+
+        console.log("lkjhuiygtfrdedftghjmk,lm")
+        console.log(activityobject1)
+
+        for (let j=0; j<user.length; j++)
+        { 
+
+            let lielement=document.createElement('li');
+            date=new Date(user[j].dates)
+            let time=10
+            calories=(user[j].time / 60)*(activityobject[user[j].activity_id]*userweight)
+            let name=activityobject1[user[j].activity_id]
+            
+            temp1=date.getDate()
+
+            temp2=date.getMonth()+1
+            temp3=date.getFullYear()
+            if (temp1<10)
+            {
+                temp1='0'+temp1
+            }
+            if (temp2<10)
+            {
+                temp2='0'+temp2
+            }
+            d=temp1+'.'+temp2+'.'+temp3
+
+            const text="Вы занимались "+name+ " в течении " +time+ " минут и потратили на это "+calories.toFixed(2)+" и делали вы это "+d
+            lielement.innerHTML=text;
+            ulelement2.append(lielement);
+            let pelement=document.createElement('p');
+            ulelement2.append(pelement);
+        }
+
+        return 
     }
 }

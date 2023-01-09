@@ -13,7 +13,7 @@
 <body>
 
 <div class="wrapper">
-  <h1 class="login-title">Welcome</h1>
+  <h1 class="login-title">Привет!</h1>
   <div class="login">
     <div>
       <input type="submit" value="Вернуться на стартовую страницу" id="return" class="login-button">
@@ -21,19 +21,23 @@
 
     <div>
       <label for="nick">Ведите свой ник</label>
-      <input type="nick" id="nick" class="login-input" placeholder="Email address">
+      <input type="nick" id="nick" class="login-input" placeholder="Ваш ник">
     </div>
     <div>
       <label for="password">Ведите пароль</label>
-      <input type="password" id="password" class="login-input" placeholder="Password">
+      <input type="password" id="password" class="login-input" placeholder="Ваш пароль">
     </div>
     <div>
-      <input type="submit" value="Login" id="logining" class="login-button">
+      <input type="submit" value="Вход" id="logining" class="login-button">
     </div>
 
 
 
   </div>
+
+  <form action="/changepassword_page">
+    <button type="button" id="changepassword_page" class="btn" >Сброс пароля</button>
+  </form>
 
 
     <script language="JavaScript" src="login_page.js"></script>

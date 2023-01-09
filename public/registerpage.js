@@ -47,27 +47,27 @@ function register(){
 
   if (nick=="")
   {
-    alert('Nickneim field cant be empty!!')
+    alert('Поле ника должно быть заполнено!')
     return
   }
   else if (password=="")
   {
-    alert('Password field cant be empty!!')
+    alert('Поле пароля должно быть заполнено!')
     return
   }
   else if (weight=="")
   {
-    alert('Weight field cant be empty!!')
+    alert('Поле веса должно быть заполнено!')
     return
   }
   else if (rost=="")
   {
-    alert('Rost field cant be empty!!')
+    alert('Поле роста должно быть заполнено!')
     return
   }
   else if (age=="")
   {
-    alert('Age field cant be empty!!')
+    alert('Поле возраста должно быть заполнено!')
     return
   }
   weight=Number(weight)
@@ -75,17 +75,23 @@ function register(){
   age=Number(age)
   if (isNaN(weight))
   {
-    alert('In weight field must be only numbers!!')
+    alert('В поле веса должны быть только цифры!')
     return
   }
   else if (isNaN(rost))
   {
-    alert('In weight field must be only numbers!!')
+    alert('В поле роста должны быть только цифры!')
     return
   }
   else if (isNaN(age))
   {
-    alert('In weight field must be only numbers!!')
+    alert('В поле возраста должны быть только цифры!!')
+    return
+  }
+
+  if (password.length < 8)
+  {
+    alert("Пароль должен содержать не менее 8 символов.")
     return
   }
 
@@ -110,7 +116,7 @@ function register(){
     }
     else
     {
-      alert("Choose another nick")
+      alert("Выберите другой ник. Этот занят.")
     }
 
  

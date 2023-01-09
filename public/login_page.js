@@ -25,18 +25,17 @@ function register(){
 
   if (nick=="")
   {
-    alert('Nickneim field cant be empty!!')
+    alert('Поле ника дожно быть заполнено!')
     return
   }
   else if (password=="")
   {
-    alert('Password field cant be empty!!')
+    alert('Поле пароля должно быть заполнено!')
     return
   }
 
   GetUserbynameandpassword(nick, password).then((result)=>{
-    alert("And login result is")
-    alert(result);
+
     if (result)
     {
     document.location.replace("home.html");
@@ -78,7 +77,6 @@ function register(){
 
 
 async function GetUserbynameandpassword(name, password) {
-  alert("We will see")
   const mm = [name , password];
   const m=JSON.stringify(mm)
 
@@ -92,3 +90,11 @@ async function GetUserbynameandpassword(name, password) {
       return found
   }
 }
+
+
+var changepassword=document.querySelector("#changepassword_page");
+changepassword.addEventListener("click", ()=>{
+    document.location.replace("changepassword.html");
+        console.log("Cath");
+});
+

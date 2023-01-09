@@ -11,12 +11,14 @@
 CREATE TABLE IF NOT EXISTS public.user
 (
 	id serial primary key,
-	name text NOT NULL,
-	password text NOT NULL,
+name text NOT NULL,
+password text NOT NULL,
 	weight real NOT NULL,
-	rost real NOT NULL,
-	pol real NOT NULL,
-	podpiska integer NOT NULL
+rost real NOT NULL,
+pol real NOT NULL,
+	podpiska integer NOT NULL,
+	age integer NOt NULL,
+	aim text not null
 );
 
 ALTER TABLE public."user" owner to postgres;

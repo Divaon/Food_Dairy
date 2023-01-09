@@ -9,17 +9,31 @@ podpiska=localStorage.getItem("podpiska");
 
 //   <p class="name" id="status">Calories today:</p>
 
+var hidendiv=document.querySelector(".inputuserfood");
+var hidenbtn=document.querySelector("#pay_page");
+if (podpiska == 0)
+{
+  hidenbtn.hidden=false
+}
+else
+{
+  hidendiv.hidden=false
+}
+
+
+var hidendiv=document.querySelector(".insertuserfood");
+
 
 var statuss=document.querySelector("#status");
 // alert(aims)
 var text=""
 if (podpiska == 0)
 {
-    text="You not activate podpiska earlier. Actions on this page blocked"
+    text="Активируйте подписку для полноценного доступа к странице"
 }
 else
 {
-    text="Hi user"
+    text="Привет пользователь"
 }
 statuss.innerHTML=(text)
 
@@ -41,7 +55,7 @@ login_page.addEventListener("click", ()=>{
     }
     else
     {
-        alert("Block")
+        alert("Заблокировано")
     }
 });
 
@@ -55,18 +69,18 @@ function addnewuserfoodd(){
 
   if (names=="")
   {
-    alert('Name field cant be empty!!')
+    alert('Поле имени должно быть заполнено!')
     return
   }
   else if (caloriess=="")
   {
-    alert('Calories field cant be empty!!')
+    alert('Поле калорий должно быть заполнено!')
     return
   }
   caloriess=Number(caloriess)
   if (isNaN(caloriess))
   {
-    alert('In caloriess field must be only numbers!!')
+    alert('В поле калорий должны быть только числа!')
     return
   }
 
@@ -94,117 +108,6 @@ async function insertnewuserfoods(names, calories, user_id) {
 }
 
 
-
-
-
-
-
-
-
-var insertuserfoood=document.querySelector("#inputactivity");
-var selectUserFoood=document.querySelector("#activity_select")
-
-insertuserfoood.addEventListener("click", ()=>{
-    // alert(nickname.textContent)
-    weight=document.getElementById('activity_tyme').value
-
-    if (weight=="")
-    {
-      alert('Weight field cant be empty!!')
-      return
-    }
-    weight=Number(weight)
-    if (isNaN(weight))
-    {
-      alert('In weight must be only numbers!!')
-      return
-    }
-
-
-    if (podpiska != 0)
-    {
-        insertusertfoodindairy('user',weight, user_id, selectUserFoood.value)
-    }
-    else
-    {
-        alert("Block")
-    }
-
-
-
-
-});
-
-
-
-
-
-async function insertusertfoodindairy(type, weight, user_id, food_id) {
-    const dd = new Date();
-    console.log("Send")
-    console.log(user_id)
-    console.log(food_id)
-    console.log("Send")
-    const response = await fetch("api/insertfood", {
-        method: "POST",
-        headers: { "Accept": "application/json", "Content-Type": "application/json" },
-        body: JSON.stringify({
-            type: type,
-            foodsid: food_id, 
-            userid: user_id,
-            weight: weight,
-            dates: dd
-        })
-    });
-
-}
-
-
-selectUserFoood.innerHTML="";
-// alert("changeactivity")
-ChangeActivity()
-
-
-{/* <p class="name" id="caloriesoutput">Calories for 100g = </p> */}
-var caloriesinfo=document.querySelector("#caloriesoutput");
-
-selectUserFoood.addEventListener("change", ()=>{
-    fooduserobject=JSON.parse(localStorage.getItem('alluserfood'))
-    const text='Calories for 100g ='+fooduserobject[selectUserFoood.value]+' for product choose product';
-    caloriesinfo.innerHTML=(text)
-});
-
-async function ChangeActivity() {
-
-    // const response = await fetch("/api/activitytypes/", {
-    const response = await fetch("/api/userfoodall/"+user_id, {
-        method: "GET",
-        headers: { "Accept": "application/json" }
-    });
-    if (response.ok === true) {
-        const user = await response.json();
-        console.log("Types")
-        console.log(user)
-
-        result={}
-
-        var option = new Option("Select", "Select");
-        selectUserFoood.options[selectUserFoood.options.length]=option;
-
-        for (let i=0; i<user.length; i++)
-        {
-            console.log(user[i]);
-            var option = new Option(user[i].name, user[i].id);
-            result[user[i].id]=user[i].calories;
-            selectUserFoood.options[selectUserFoood.options.length]=option;
-        }
-
-
-
-        localStorage.setItem('alluserfood', JSON.stringify(result))
-    }
-
-}
 
 // Podpiska code
 
@@ -238,7 +141,7 @@ pay_page.addEventListener("click", ()=>{
         }),
       })
         .then(res => {
-            alert("Have res");
+            // alert("Have res");
             alert(res)
             console.log(res)
           if (res.ok) return res.json()
@@ -246,13 +149,13 @@ pay_page.addEventListener("click", ()=>{
           return res.json().then(e => Promise.reject(e))
         })
         .then(({ url }) => {
-            alert("Have url");
+            // alert("Have url");
           // On success redirect the customer to the returned URL
           window.location = url
         })
         .catch(e => {
             alert(e.error)
-            alert("Have error");
+            // alert("Have error");
             console.log(e.error)
           console.error(e.error)
         })

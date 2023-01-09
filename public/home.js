@@ -22,6 +22,13 @@ else
 }
 
 
+var changepage=document.querySelector("#changeuserpage");
+
+changepage.addEventListener("click", ()=>{
+    document.location.replace('changeuser.html')
+});
+
+
 
 
 
@@ -34,182 +41,13 @@ out.addEventListener("click", ()=>{
 {/* <input type="weight" id="updateweight" class="login-input" placeholder="new weight">
 <input type="submit" value="New weight" id="updatingweight" class="btn"> */}
 
-var updateweight=document.querySelector("#updatingweight");
 
-updateweight.addEventListener("click", ()=>{
-    // alert(nickname.textContent)
-    weight=document.getElementById('updateweight').value
-
-    if (weight=="")
-    {
-      alert('Weight field cant be empty!!')
-      return
-    }
-    weight=Number(weight)
-    if (isNaN(weight))
-    {
-      alert('In weight field must be only numbers!!')
-      return
-    }
-    if (nickname.textContent=="Пользователь не активен")
-    {
-        alert('Enter in profile first')
-      return
-    }
-
-    EditUserWeight(nick=nickname.textContent, weight)
-    UserInfo(nick=nickname.textContent)
-
-
-});
-
-
-async function EditUserWeight(nick, weight) {
-    const response = await fetch("api/users", {
-        method: "PUT",
-        headers: { "Accept": "application/json", "Content-Type": "application/json" },
-        body: JSON.stringify({
-            name: nick,
-            weight: weight
-        })
-    });
-
-}
-
-
-
-
-var updatingage=document.querySelector("#updatingage");
-
-updatingage.addEventListener("click", ()=>{
-    // alert(nickname.textContent)
-    weight=document.getElementById('updateage').value
-
-    if (weight=="")
-    {
-      alert('Age field cant be empty!!')
-      return
-    }
-    weight=Number(weight)
-    if (isNaN(weight))
-    {
-      alert('In age field must be only numbers!!')
-      return
-    }
-    if (nickname.textContent=="Пользователь не активен")
-    {
-        alert('Enter in profile first')
-      return
-    }
-
-    EditUserAge(nick=nickname.textContent, weight)
-    UserInfo(nick=nickname.textContent)
-
-
-});
-
-
-async function EditUserAge(nick, age) {
-    const response = await fetch("api/userage", {
-        method: "PUT",
-        headers: { "Accept": "application/json", "Content-Type": "application/json" },
-        body: JSON.stringify({
-            name: nick,
-            age: age
-        })
-    });
-
-}
-
-
-var updaterost=document.querySelector("#updatingrost");
-
-updaterost.addEventListener("click", ()=>{
-    // alert(nickname.textContent)
-    rost=document.getElementById('updaterost').value
-
-    if (rost=="")
-    {
-      alert('Weight field cant be empty!!')
-      return
-    }
-    rost=Number(rost)
-    if (isNaN(rost))
-    {
-      alert('In weight field must be only numbers!!')
-      return
-    }
-    if (nickname.textContent=="Пользователь не активен")
-    {
-        alert('Enter in profile first')
-      return
-    }
-
-    EditUserRost(nick=nickname.textContent, rost)
-    UserInfo(nick=nickname.textContent)
-
-
-});
-
-
-async function EditUserRost(nick, rost) {
-    alert("Try");
-    const response = await fetch("api/usersrost", {
-        method: "PUT",
-        headers: { "Accept": "application/json", "Content-Type": "application/json" },
-        body: JSON.stringify({
-            name: nick,
-            rost: rost
-        })
-    });
-    UserInfo(nick=nickname.textContent)
-
-}
 
 
 {/* <div class="informational">
 <p class="name" id="userinformation">Current user</p>
 </div> */}
 
-var userinfo=document.querySelector("#userinformation");
-
-if (nickname.textContent=="Пользователь не активен")
-    {
-        alert('Enter in profile first')
-    }
-else
-    {
-        UserInfo(nick=nickname.textContent)
-
-    }      
-
-
-async function UserInfo(name) {
-    const response = await fetch("/api/usersinfo/"+name, {
-        method: "GET",
-        headers: { "Accept": "application/json" }
-    });
-    if (response.ok === true) {
-        const user = await response.json();
-        console.log("check user");
-        console.log(user);
-        pol="male";
-        if (user[0].pol)
-        {
-            pol="female";
-        }
-        else
-        {
-            pol="male"
-        }
-        console.log(user[0].pol)
-        const text='User info: nick='+user[0].name+', weight='+ user[0].weight+', rost=' +user[0].rost+', pol=' +pol + ', age='+ user[0].age;
-        localStorage.setItem("userweight", user[0].weight)
-        localStorage.setItem("podpiska", user[0].podpiska)
-        localStorage.setItem("userid", user[0].id)
-        userinfo.innerHTML=(text)
-    }
-}
 
 // <select name="typefood" id="type_food_select">
 // <option value="Meat">Meat</option>
@@ -267,7 +105,7 @@ var caloriesinfo=document.querySelector("#caloriesoutput");
 
 selectFood.addEventListener("change", ()=>{
     foodobject=JSON.parse(localStorage.getItem('allfood'))
-    const text='Calories for 100g ='+foodobject[selectFood.value]+' for product choose product';
+    const text='Калорий на 100 грамм ='+foodobject[selectFood.value]+' для выбраного продукта';
     caloriesinfo.innerHTML=(text)
 });
 
@@ -385,6 +223,29 @@ async function GetFoods() {
         return foodobject
     }
 }
+
+
+
+async function GetFoodsname() {
+    const response = await fetch("/api/getallfoods/", {
+        method: "GET",
+        headers: { "Accept": "application/json" }
+    });
+    if (response.ok === true) {
+        const user = await response.json();
+        console.log("Food")
+        console.log(user)
+
+        var foodobject = {};
+
+        for (let i=0; i<user.length; i++)
+        {
+            foodobject[user[i].id] = user[i].name;
+        }
+        
+        return foodobject
+    }
+}
 // console.log(GetFoods())
 
 GetFoods().then(
@@ -395,7 +256,14 @@ GetFoods().then(
         localStorage.setItem('allfood', JSON.stringify(result))
     }
 )
-
+GetFoodsname().then(
+    function(result)
+    {
+        console.log(";lkjhgfdsfxcgvbhjnm,./,mnbvgcfdx")
+        console.log(result)
+        localStorage.setItem('allnamefood', JSON.stringify(result))
+    }
+)
 
 
 
@@ -488,6 +356,7 @@ async function ChangeActivity() {
         console.log(user)
 
         result={}
+        result1={}
 
         var option = new Option("Select", "Select");
         selectUserActivity.options[selectUserActivity.options.length]=option;
@@ -497,12 +366,14 @@ async function ChangeActivity() {
             console.log(user[i]);
             var option = new Option(user[i].name, user[i].id);
             result[user[i].id]=user[i].coeficent;
+            result1[user[i].id]=user[i].name;
             selectUserActivity.options[selectUserActivity.options.length]=option;
         }
 
 
 
         localStorage.setItem('allactivity', JSON.stringify(result))
+        localStorage.setItem('allactivity1', JSON.stringify(result))
     }
 
 }
@@ -522,70 +393,6 @@ podpiska_page.addEventListener("click", ()=>{
         document.location.replace("podpiska.html");
     }
   });
-
-
-//   <button type="button" id="delete"  class="btn">Podpiska</button>
-var deleteuser=document.querySelector("#delete");
-
-
-deleteuser.addEventListener("click", ()=>{
-
-    if (nickname.textContent=="Пользователь не активен")
-    {
-    alert('Enter in profile first')
-      return
-    }
-    else
-    {
-        DeleteUser()
-    }
-
-  });
-
-//   /api/userdelete/
-async function DeleteUser() {
-    var user_id=localStorage.getItem('userid')
-    const response = await fetch("/api/userdelete/"+user_id, {
-        method: "Delete",
-        headers: { "Accept": "application/json" },
-    });
-    if (response.ok === true)
-    {
-        alert("User was delete")
-        nickname.innerText="Пользователь не активен"
-        localStorage.removeItem('username')
-    }
-    else
-    {
-        alert("something go wrong")
-    }
-    return
-
-}
-
-
-
-
-
-
-
-
-
-
-{/* <div class="insertuserfood">
-<select name="userfood_choose" id="userfood_select">
-  <option value="anons">Anons</option>
-</select>
-<input type="userfood" id="userfood_c" class="login-input" placeholder="Вес в грамах">
-<input type="submit" value="Вести в дневник" id="inputuserfood" class="btn">
-</div>
-<div class="informational">
-<p class="name" id="caloriesoutput2">Калорий на 100 грамм = </p>
-</div> */}
-
-
-
-
 
 
 var insertuserfoood=document.querySelector("#inputuserfood");
@@ -658,7 +465,7 @@ var caloriesinfo2=document.querySelector("#caloriesoutput2");
 
 selectUserFoood.addEventListener("change", ()=>{
     fooduserobject=JSON.parse(localStorage.getItem('alluserfood'))
-    const text='Calories for 100g ='+fooduserobject[selectUserFoood.value]+' for product choose product';
+    const text='Калорий на 100 грамм ='+fooduserobject[selectUserFoood.value]+' для выбраного продукта';
     caloriesinfo2.innerHTML=(text)
 });
 
@@ -696,31 +503,70 @@ async function ChangeActivity3() {
 
 
 {/* <input type="password" id="newpassword" class="login-input" placeholder="Password">
+<input type="password" id="oldpassword" class="login-input" placeholder="Password">
 <input type="submit" value="Изменить пароль" id="updatepassword" class="btn"> */}
 
 
-var password_update=document.querySelector("#updatepassword");
-var passwordtext=document.querySelector("#newpassword");
-
-password_update.addEventListener("click", ()=>{
-    
-  });
 
 
+GetFoodDay(user_id=localStorage.getItem('userid'))
 
-async function upfatepassword(name, password) {
-    const dd = new Date();
-    console.log("Send")
-    console.log(user_id)
-    console.log(food_id)
-    console.log("Send")
-    const response = await fetch("api/insertfood", {
-        method: "POST",
-        headers: { "Accept": "application/json", "Content-Type": "application/json" },
-        body: JSON.stringify({
-            name: name,
-            password: password
-        })
+
+async function GetFoodDay(userid) {
+    const response = await fetch("/api/getfoodportionsid/"+userid, {
+        method: "GET",
+        headers: { "Accept": "application/json" }
     });
+    if (response.ok === true) {
+        // console.log("responce is ok")
+        const user = await response.json();
+        now = new Date();
+        mydayfoodcalories={
+            "today": 0
+        }
+        for (let j=0; j<user.length; j++)
+        {   
+            tempdate=new Date(user[j].dates)
 
+            if (now.toDateString() == tempdate.toDateString())
+            {
+                return
+            }
+
+        }
+        // console.log('Result')
+        // console.log(mydayfoodcalories)
+        alert("За сегодня вы пока не внесли в дневник питапния ничего.")
+        return 
+    }
+}
+
+
+UserInfo(nicknames)
+
+var hidendiv=document.querySelector(".insertuserfood");
+
+async function UserInfo(name) {
+    const response = await fetch("/api/usersinfo/"+name, {
+        method: "GET",
+        headers: { "Accept": "application/json" }
+    });
+    if (response.ok === true) {
+        const user = await response.json();
+        localStorage.setItem("userweight", user[0].weight)
+        localStorage.setItem("podpiska", user[0].podpiska)
+        localStorage.setItem("userid", user[0].id)
+        // alert(user[0].podpiska)
+        if (user[0].podpiska != 0)
+        {
+            // alert("Пытаемся показать")
+            // hidendiv.show=true;
+            hidendiv.hidden=false
+        }
+        else
+        {
+            // alert("Пытаемся спрятать")
+            hidendiv.hidden=true;
+        }
+    }
 }

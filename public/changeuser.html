@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width/;lkjhg, initial-scale=1.0">
+  <title>Dairy Food</title>
+<!-- 
+  <meta name="google-signin-client_id" content="YOUR_CLIENT_ID.apps.googleusercontent.com"> -->
+  <title>Sign In With Google Using JavaScript</title>
+  <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous"> -->
+    
+
+
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<body>
+  <div class="wrapper">
+
+    <div class="admbutons">
+      <!-- <a href="loginpage.html" >Log</a>
+      <a href='rigisterpage.html' >Register</a> -->
+
+        <form action="/register_page">
+            <button type="button" id="outofprofile" class="btn" >Вернуться на главную страницу</button>
+            <button type="button" id="delete"  class="btn">Удаление профиля</button>
+        </form>
+      <p>Имя текущего пользователя: </p>
+      <p class="name" id="nameuser"></p>
+    </div>
+
+    <!-- <p class="name" id="nameuser">Ежедневное потребление калорий</p> -->
+
+    <div class="updateweight">
+      <label>Изменить вес </label>
+      <input type="weight" id="updateweight" class="login-input" placeholder="Новый вес">
+      <input type="submit" value="Новый вес" id="updatingweight" class="btn">
+    </div>
+
+    <div class="updaterost">
+      <label>Изменить рост </label>
+      <input type="rost" id="updaterost" class="login-input" placeholder="Новый рост">
+      <input type="submit" value="Новый рост" id="updatingrost" class="btn">
+    </div>
+
+    <div class="updateage">
+      <label>Изменить возраст </label>
+      <input type="age" id="updateage" class="login-input" placeholder="Новый возраст">
+      <input type="submit" value="Новый возраст" id="updatingage" class="btn">
+    </div>
+
+    <div class="updateaim">
+      <label>Изменить свою цель </label>
+      <input type="aim" id="updateaim" class="login-input" placeholder="Новая цель">
+      <input type="submit" value="Изменить цель" id="updatingaim" class="btn">
+    </div>
+    <div class="informational">
+      <p class="name" id="userinformation">Информация о пользователе:</p>
+    </div>
+
+    <!-- <div class="adduserfood">
+      <input type="nick" id="namefood" class="login-input" placeholder="name food">
+      <input type="nick" id="calories" class="login-input" placeholder="calories">
+      <input type="submit" value="Login" id="addinguserfood" class="login-button">
+    </div>
+
+    <div class="eatfood">
+       <input type="nick" id="namefood" class="login-input" placeholder="name food">
+      <input type="nick" id="calories" class="login-input" placeholder="calories">
+      <input type="submit" value="Login" id="addinguserfood" class="login-button">
+    </div> -->
+
+
+
+<div class="Edit_password">
+  <p></p>
+  <label>Ведите новый пароль</label>
+  <input type="password" id="newpassword" class="login-input" placeholder="Пароль">
+  <p></p>
+  <label>Ведите старый пароль</label>
+  <input type="password" id="oldpassword" class="login-input" placeholder="Пароль">
+  <input type="submit" value="Изменить пароль" id="updatepassword" class="btn">
+</div>
+
+
+
+    <script language="JavaScript" src="changeuser.js"></script>
+
+  </div>
+
+</body>
+</html>
