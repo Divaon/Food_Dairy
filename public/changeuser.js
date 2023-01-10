@@ -159,7 +159,7 @@ async function EditUserRost(nick, rost) {
 <p class="name" id="userinformation">Current user</p>
 </div> */}
 
-var userinfo=document.querySelector("#userinformation");
+const userinfo=document.querySelector("#userinformation");
 
 if (nickname.textContent=="Пользователь не активен")
     {
@@ -191,10 +191,20 @@ async function UserInfo(name) {
             pol="мужской"
         }
         console.log(user[0].pol)
-        const text='Информация о пользователе: ник='+user[0].name+', вес='+ user[0].weight+', рост=' +user[0].rost+', пол=' +pol + ', возраст='+ user[0].age +', а своей целью вы выбрали '+user[0].aim;
+        let text=""
+        if (user[0].aim == "Null")
+        {
+            text='Информация о пользователе: ник='+user[0].name+', вес='+ user[0].weight+', рост=' +user[0].rost+', пол=' +pol + ', возраст='+ user[0].age +', а свою цель вы пока не указали.';
+        }
+        else
+        {
+            text='Информация о пользователе: ник='+user[0].name+', вес='+ user[0].weight+', рост=' +user[0].rost+', пол=' +pol + ', возраст='+ user[0].age +', а своей целью вы выбрали '+user[0].aim;
+        }
+        // const text='Информация о пользователе: ник='+user[0].name+', вес='+ user[0].weight+', рост=' +user[0].rost+', пол=' +pol + ', возраст='+ user[0].age +', а своей целью вы выбрали '+user[0].aim;
         localStorage.setItem("userweight", user[0].weight)
         localStorage.setItem("podpiska", user[0].podpiska)
         localStorage.setItem("userid", user[0].id)
+        // userinfo.style.fontWeight=700
         userinfo.innerHTML=(text)
     }
 }
@@ -226,7 +236,7 @@ deleteuser.addEventListener("click", ()=>{
 
     if (nickname.textContent=="Пользователь не активен")
     {
-    alert('Enter in profile first')
+    // alert('Enter in profile first')
       return
     }
     else
@@ -248,6 +258,7 @@ async function DeleteUser() {
         alert("Пользователь удален")
         nickname.innerText="Пользователь не активен"
         localStorage.removeItem('username')
+        document.location.replace("first_page.html");
     }
     else
     {
@@ -308,7 +319,6 @@ async function updatespasswordd(namee, passwordd, oldpasswordd) {
         })
     });
     GetUserbynameandpassword(nick, oldpasswordd).then((result)=>{
-        alert("And change password is")
         alert(result);
         if (result === false)
         {
@@ -326,7 +336,6 @@ async function updatespasswordd(namee, passwordd, oldpasswordd) {
 
 
 async function GetUserbynameandpassword(name, password) {
-    alert("We will see")
     const mm = [name , password];
     const m=JSON.stringify(mm)
   

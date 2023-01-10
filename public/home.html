@@ -24,24 +24,30 @@
           <button type="button" id="outofprofile" class="btn" >Выйти из профиля</button>
           <button type="button" id="changeuserpage" class="btn" >Изменить информацию о профиле</button>
         </form>
+
+        <div style="display:flex; flex-direction:row;">
       <p>Имя текущего пользователя: </p>
-      <p class="name" id="nameuser"></p>
+      <p class="name" id="nameuser" style="font-weight: 700;"></p>
+        </div>
     </div>
 
 
 
-    <div class="choosefood">
+
+    <div class="choosefood" style="margin-top:20px;">
       <label>Выбор и указание веса для продукта </label>
-      <select name="typefood" id="type_food_select">
-        <option value="Meat">Meat</option>
-        <option value="Corns">Corns</option>
-        <option value="C">C</option>
-      </select>
-      <select name="finalfood" id="final_food_select">
-        <option value="anons">Anons</option>
-      </select>
-      <input type="weightfood" id="weight_food" class="login-input" placeholder="Вес в грамах">
-      <input type="submit" value="Ввести в дневник" id="inputfood" class="btn">
+      <div style="display:flex; flex-direction:row;">
+        <select name="typefood" id="type_food_select">
+          <option value="Meat">Meat</option>
+          <option value="Corns">Corns</option>
+          <option value="C">C</option>
+        </select>
+        <select name="finalfood" id="final_food_select">
+          <option value="anons">Anons</option>
+        </select>
+        <input type="input" id="weight_food" class="login-input" placeholder="Вес в граммах">
+        <button type="submit" id="inputfood" class="btn">Ввести в дневник</button>
+      </div>
     </div>
 
 
@@ -53,39 +59,44 @@
     <p></p>
 
 
-    <div class="insertuserfood" id="hidendiv" hidden="true">
-      <label>Выбор и указание веса для продукта, который был добавлен вами </label>
+    <div class="insertuserfood" id="hidendiv" hidden="true" style="margin-top:20px;">
+      <label >Выбор и указание веса для продукта, который был добавлен вами </label>
+      <div style="display:flex; flex-direction:row;">
       <select name="userfood_choose" id="userfood_select">
         <option value="anons">Anons</option>
       </select>
-      <input type="userfood" id="userfood_c" class="login-input" placeholder="Вес в грамах">
-      <input type="submit" value="Ввести в дневник" id="inputuserfood" class="btn">
+      <input type="input" id="userfood_c" class="login-input" placeholder="Вес в граммах">
+      <button type="submit"  id="inputuserfood">Ввести в дневник</button>
+      </div>
       <div class="informational">
-        <p class="name" id="caloriesoutput2">Калорий на 100 грамм = </p>
+        <p class="name" id="caloriesoutput2">Калорий на 100 грамм</p>
       </div>
     </div>
 
+    
+
     <p></p>
 
-    <div class="chooseactivity">
+    <div class="chooseactivity" style="margin-top:20px;">
       <label>Выбор и указание времени и вида физической активности </label>
+      <div style="display:flex; flex-direction:row;">
       <select name="activity_choose" id="activity_select">
         <option value="anons">Anons</option>
       </select>
-      <input type="activitytyme" id="activity_tyme" class="login-input" placeholder="Активность в минутах">
-      <input type="submit" value="Ввести в дневник" id="inputactivity" class="btn">
+      <input type="input" id="activity_tyme" class="login-input" placeholder="Активность в минутах">
+      <button type="submit" id="inputactivity" class="btn">Ввести в дневник</button>
+      </div>  
     </div>
 
     
     <!-- <input type="submit" value="Add in dairy" id="tt" class="btn">
      -->
-     <form action="/grafics_page">
+     <div style="margin-top:20px;">
       <button type="button" id="grafics"  class="btn">Графики</button>
-  </form>
+      <button type="button" id="podpiksa"  class="btn">Активность для подписчиков</button>
 
-  <form action="/podpiska_page">
-    <button type="button" id="podpiksa"  class="btn">Активность для подписчиков</button>
-</form>
+     </div>
+
 
 <!-- <form action="delete_user">
   <button type="button" id="delete"  class="btn">Удаление профиля</button>

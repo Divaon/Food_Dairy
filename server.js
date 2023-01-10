@@ -56,9 +56,6 @@ app.put("/api/updatespassword", jsonParser, function(req, res){
     const name= req.body.name;
     const password = req.body.password;
     const oldpassword= req.body.oldpassword;
-    console.log("We was here really")
-    console.log(name, password, oldpassword)
-    console.log("check check check")
     cursors.query("UPDATE public.user SET password=$1	WHERE name = $2 and password = $3;",
      [oldpassword, name,    password], function(err, result){
         if (err){
@@ -76,8 +73,7 @@ app.put("/api/updatespassword", jsonParser, function(req, res){
 
 
 // получение одного пользователя по name
-app.get("/api/user/:name", function(req, res){
-    // console.log("User by name")  ;
+app.get("/api/user/:name", function(req, res){;
     const name = req.params.name; 
     let getthisuser = null;
     cursors.query("SELECT id, name, password, weight, podpiska	FROM public.user where name = $1;", [name], function(err, result){
@@ -87,16 +83,12 @@ app.get("/api/user/:name", function(req, res){
         }
         else
         {   
-            // console.log("And Select give me")
-            // console.log(result.rows)
             if (result.rows[0] == undefined)
             {
-                // console.log("Select is null")
                 getthisuser=true
             }
             else
             {
-                // console.log("Row have smth")
                 getthisuser=false
             }
             
@@ -110,14 +102,10 @@ app.get("/api/user/:name", function(req, res){
 
 //проверка логирования
 app.get("/api/us/:m" , function(req, res){
-    console.log("User by name and password")  ;
     const m =JSON.parse(req.params.m);
-    console.log(typeof(m))
     const name = m[0]; 
     const password=m[1]; 
-    console.log(name, password)
     let getthisuser = null;
-    console.log(name, password)
     cursors.query("SELECT id, name, password, weight, podpiska FROM public.user where name = $1 and password = $2;", 
     [name, password], function(err, result){
         if (err){
@@ -126,16 +114,12 @@ app.get("/api/us/:m" , function(req, res){
         }
         else
         {   
-            console.log("And Select give me")
-            console.log(result.rows)
             if (result.rows[0] == undefined)
             {
-                console.log("Select is null")
                 getthisuser=false
             }
             else
             {
-                console.log("Row have smth")
                 getthisuser=true
             }
             
@@ -167,9 +151,6 @@ app.post("/api/users", jsonParser, function (req, res) {
     cursors.query("Insert Into public.user(name, password, weight, rost, pol, podpiska, age, aim) values ($1, $2, $3, $4, $5, $6, $7, $8);", 
     [userName, password, userWeight, userRost, userPol,  podpiska, age, aim], function(err, result){
         if (err){
-            console.log("Hi problem /api/users isert user")
-            console.log(age)
-            console.log("wait")
             return console.log(err)
         }
     })
@@ -241,16 +222,12 @@ app.put("/api/usersrost", jsonParser, function(req, res){
     // console.log("We get be here?");
     cursors.query("UPDATE public.user SET rost=$1 WHERE name = $2;",
      [rost, name], function(err, result){
-        console.log("HHHH");
-        console.log(err);
-        console.log(result);
         if (err){
             console.log("Hi problem /api/usersrost")
             return console.log(err)
         }
         else
         {
-            // console.log("And what");
             console.log(result);
         }
     })
@@ -264,19 +241,14 @@ app.put("/api/usersaim", jsonParser, function(req, res){
     if(!req.body) return res.sendStatus(400);
     const name= req.body.name;
     const aim = req.body.aim;
-    // console.log("We get be here?");
     cursors.query("UPDATE public.user SET aim=$1 WHERE name = $2;",
      [aim, name], function(err, result){
-        console.log("HHHH");
-        console.log(err);
-        console.log(result);
         if (err){
             console.log("Hi problem /api/usersrost")
             return console.log(err)
         }
         else
         {
-            // console.log("And what");
             console.log(result);
         }
     })
@@ -287,11 +259,8 @@ app.put("/api/usersaim", jsonParser, function(req, res){
 
 // получение одного пользователя по name
 app.get("/api/usersinfo/:name", function(req, res){
-    console.log("UserInfo by name");
     const name = req.params.name; // получаем id
     let user = null;
-
-
     cursors.query("SELECT id, name, password, weight, rost, pol ,podpiska, age, aim FROM public.user where name = $1", 
     [name], function(err, result){
         if (err){
@@ -300,9 +269,6 @@ app.get("/api/usersinfo/:name", function(req, res){
         }
         else
         {   
-            // console.log("And Select give me")
-            // console.log(result.rows)
-            // console.log("And we send it")
             res.send(result.rows)
 
         }
@@ -315,17 +281,11 @@ app.get("/api/usersinfo/:name", function(req, res){
 
 // получение пользователя для изменения пароля поиск
 app.get("/api/founduser/:m", function(req, res){
-    console.log("/api/founduser");
-
-
     const m =JSON.parse(req.params.m);
     const name = m[0]; 
     const age=m[1]; 
     const pol=m[2]*0.0;
     const password=m[3];
-
-    console.log(name[0])
-
     cursors.query("SELECT id, password FROM public.user where name = $1 and age = $2 and pol = $3", 
     [name, age, pol], function(err, result){
         if (err){
@@ -334,14 +294,6 @@ app.get("/api/founduser/:m", function(req, res){
         }
         else
         {   
-            // console.log("lkoijuhygtfdfghjklkjhgfds")
-            // console.log(typeof(name), typeof(age), typeof(pol), password)
-            // console.log(result.rows)
-            // console.log(result)
-
-            console.log("hmmmmmmn")
-            console.log(result.rowCount)
-
             if (result.rowCount == 0)
             {
                 console.log("qwertyuiop[]asdfghjkl;'zxcvbnm,./")
@@ -351,8 +303,6 @@ app.get("/api/founduser/:m", function(req, res){
             }
             else
             {
-                // UPDATE public."user"	SET id=?, name=?, password=?, weight=?, rost=?, pol=?, podpiska=?, age=?, aim=?	WHERE <condition>;
-                console.log("147258369147258369")
                 cursors.query("UPDATE public.user SET password = $1 WHERE name = $2;",
                 [password, name], function(err, result){
                    if (err){
@@ -361,7 +311,6 @@ app.get("/api/founduser/:m", function(req, res){
                    }
                    else
                    {
-                        console.log("Heeloo")
                         const temp=true
                         const m=JSON.stringify(temp)
                         res.send(temp)
@@ -382,7 +331,6 @@ app.get("/api/founduser/:m", function(req, res){
 
 // получение типов еды исключая пользовательский
 app.get("/api/foodtypes/", function(req, res){
-    // console.log("UserInfo by name");
     let user = null;
     cursors.query("SELECT id, type FROM public.type", 
     function(err, result){
@@ -403,7 +351,6 @@ app.get("/api/foodtypes/", function(req, res){
 
 // получение определенного типа еды исключая пользовательский
 app.get("/api/foods/:id", function(req, res){
-    // console.log("We try found food");
     let type_id = req.params.id;
     cursors.query("SELECT id, name, calories, opisanie FROM public.food where id_type= $1", 
     [type_id], function(err, result){
@@ -413,11 +360,7 @@ app.get("/api/foods/:id", function(req, res){
         }
         else
         {   
-            // console.log("And Select give me")
-            // console.log(result.rows)
-            // console.log("And we send it")
             res.send(result.rows)
-
         }
     })
 
@@ -439,12 +382,6 @@ app.post("/api/insertfood", jsonParser, function (req, res) {
     const user_id = req.body.userid;
     const weight = req.body.weight;
     const dates = req.body.dates
-
-    // console.log("Food insert")
-    // console.log(food_id)
-    // console.log(user_id)
-    // console.log(type, food_id, user_id, weight, dates)
-    // console.log("Food insert")
     cursors.query("Insert Into public.foodportions(type, food_id, user_id, weight, dates) values ($1, $2, $3, $4, $5);", 
     [type, food_id, user_id, weight, dates], function(err, result){
         if (err){
@@ -458,21 +395,14 @@ app.post("/api/insertfood", jsonParser, function (req, res) {
 // "/api/getfoodbyid/"+userid
 // вывод продуктов определенного типа общие пользователя
 app.get("/api/getfoodportionsid/:id", function(req, res){
-    // console.log("We try found food ");
     let id = req.params.id;
-    console.log(id+" and what with id")
     cursors.query("SELECT type, food_id, weight, dates FROM public.foodportions where user_id= $1", 
     [id], function(err, result){
         if (err){
-            // console.log("Hi problem /api/getfoodportionsid/:id")
-            // return console.log(err)
             return console.log("Hi problem /api/getfoodportionsid/:id")
         }
         else
         {   
-            // console.log("And Select give me")
-            // console.log(result.rows)
-            // console.log("And we send it")
             res.send(result.rows)
 
         }
@@ -483,7 +413,6 @@ app.get("/api/getfoodportionsid/:id", function(req, res){
 
 // вывод всех продуктов не пользовательских
 app.get("/api/getallfoods", function(req, res){
-    console.log("We want all food");
     let user = null;
     cursors.query("SELECT id, calories, name FROM public.food", 
     function(err, result){
@@ -493,9 +422,6 @@ app.get("/api/getallfoods", function(req, res){
         }
         else
         {   
-            // console.log("And Select give me")
-            // console.log(result.rows)
-            // console.log("And we send it")
             res.send(result.rows)
         }
     })
@@ -505,7 +431,6 @@ app.get("/api/getallfoods", function(req, res){
 
 // получение типов активности пользовательский
 app.get("/api/activitytypes/", function(req, res){
-    // console.log("UserInfo by name");
     let user = null;
     cursors.query("SELECT id, name, coeficent FROM public.activity", 
     function(err, result){
@@ -515,24 +440,13 @@ app.get("/api/activitytypes/", function(req, res){
         }
         else
         {   
-            // console.log("And Select give me")
-            // console.log(result.rows)
-            // console.log("And we send it")
             res.send(result.rows)
-
         }
     })
 
 });
 
-
-
 // "api/insertactivity"
-// activityid: actid,
-// userid: user_id,
-// dates: dd,
-// time: weight
-
 
 app.post("/api/insertactivity", jsonParser, function (req, res) {
     if(!req.body) return res.sendStatus(400);
@@ -541,11 +455,6 @@ app.post("/api/insertactivity", jsonParser, function (req, res) {
     const actid = req.body.activityid;
     const dates = req.body.dates
 
-    // console.log("Food insert")
-    // console.log(food_id)
-    // console.log(user_id)
-    // console.log(type, food_id, user_id, weight, dates)
-    // console.log("Food insert")
     cursors.query("Insert Into public.activityuser(user_id, time, activity_id, dates) values ($1, $2, $3, $4);", 
     [usid, times, actid, dates], function(err, result){
         if (err){
@@ -561,47 +470,35 @@ app.post("/api/insertactivity", jsonParser, function (req, res) {
 
 // вывод активностей пользователя
 app.get("/api/getactivityportionsid/:id", function(req, res){
-    // console.log("We try found food ");
     let id = req.params.id;
-    // console.log(id+" and what with id")
     cursors.query("SELECT user_id, activity_id, dates, time FROM public.activityuser where user_id= $1", 
     [id], function(err, result){
         if (err){
             console.log("Hi problem /getactivityportionsid/:id")
             return console.log(err)
-            // return console.log("Hi problem /api/getfoodportionsid/:id")
         }
         else
         {   
-            // console.log("And Select give me")
-            // console.log(result.rows)
-            // console.log("And we send it")
             res.send(result.rows)
-
         }
     })
 
 });
 
 // api/insertuserfood
-
-// calories: calories,
-// namess: names, 
-// userid: user_id,
+// api/insertuserfood
 
 app.post("/api/insertuserfood", jsonParser, function (req, res) {
+
+    Console.log("KLJKHJGFDFGHJK1")
+
     if(!req.body) return res.sendStatus(400);
     const calories = req.body.calories;
     const names=req.body.namess;
     const user_id = req.body.userid;
-    const weight = req.body.weight;
-    const dates = req.body.dates
 
-    // console.log("Food insert")
-    // console.log(food_id)
-    // console.log(user_id)
-    // console.log(type, food_id, user_id, weight, dates)
-    // console.log("Food insert")
+
+
     cursors.query("Insert Into public.userfood(calories, user_id, name) values ($1, $2, $3);", 
     [calories, user_id, names], function(err, result){
         if (err){
@@ -612,6 +509,57 @@ app.post("/api/insertuserfood", jsonParser, function (req, res) {
     res.send();
 });
 
+app.get("/api/insertuserfood/:m", function(req, res){
+
+    // const mm = [names,calories,user_id];
+    console.log("KLJKHJGFDFGHJK")
+    const m =JSON.parse(req.params.m);
+    const name = m[0]; 
+    const calories=m[1]*1.0; 
+    const user_id=m[2];
+
+    // const calories = req.body.calories;
+    // const names=req.body.namess;
+    // const user_id = req.body.userid;
+
+
+    cursors.query("SELECT id, name FROM public.userfood where name = $1", 
+    [name], function(err, result){
+        if (err){
+            console.log("Hi problem /api/foodtypes/")
+            return console.log(err)
+        }
+        else
+        {   
+            if (result.rowCount == 0)
+            {
+                console.log("dgdsghds")
+
+
+                cursors.query("Insert Into public.userfood(calories, user_id, name) values ($1, $2, $3);", 
+                [calories, user_id, name], function(err, result){
+                    if (err){
+                        console.log("And we cathc error /api/insertuserfood")
+                        return console.log(err)
+                    }
+                })
+
+                const temp=true
+                const m=JSON.stringify(temp)
+                res.send(m)
+            }
+            else
+            {
+                const temp=false
+                const m=JSON.stringify(temp)
+                res.send(temp)
+                
+            }
+
+            }
+
+        })
+});
 
 
 
@@ -621,9 +569,7 @@ app.post("/api/insertuserfood", jsonParser, function (req, res) {
         // const response = await fetch("/api/userfoodall/", {
 
 app.get("/api/userfoodall/:id", function(req, res){
-    // console.log("UserInfo by name");
     const user_id = req.params.id; 
-    // let user = null;
     cursors.query("SELECT id, name, calories, user_id FROM public.userfood where user_id=$1", 
     [user_id], function(err, result){
         if (err){
@@ -632,11 +578,7 @@ app.get("/api/userfoodall/:id", function(req, res){
         }
         else
         {   
-            // console.log("And Select give me")
-            // console.log(result.rows)
-            // console.log("And we send it")
             res.send(result.rows)
-
         }
     })
 
@@ -763,12 +705,10 @@ app.post("/create-checkout-session/:id", async (req, res) => {
 };
 
 const successPay = async (req, res) => {
-    console.log("We have benn hear");
     try {
         const session = await stripe2.checkout.sessions.retrieve(
             req.query.session_id
         );
-
         // create rent or delete fine
         if (req.query.purpose == 'rent') {
             await payBooking(req.query.product);
@@ -788,11 +728,7 @@ const successPay = async (req, res) => {
 
 // обновление подписки
 app.get("/api/changepopdpiska/:id", function(req, res){
-    console.log("I have been there")
     const id = req.params.id; 
-    console.log("And user id="+ id)
-    console.log(id)
-
     cursors.query("UPDATE public.user SET podpiska=1 WHERE id = $1;",
     [id], function(err, result){
        if (err){

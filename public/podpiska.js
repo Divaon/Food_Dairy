@@ -33,7 +33,7 @@ if (podpiska == 0)
 }
 else
 {
-    text="Привет пользователь"
+    text="Привет пользователь. "
 }
 statuss.innerHTML=(text)
 
@@ -84,16 +84,38 @@ function addnewuserfoodd(){
     return
   }
 
-    insertnewuserfoods(names, caloriess, user_id)
+    insertnewuserfoods2(names, caloriess, user_id)
 
-    selectUserFoood.innerHTML="";
+    // selectUserFoood.innerHTML="";
     // alert("changeactivity")
-    ChangeActivity()
+    // ChangeActivity()
 };
+
+async function insertnewuserfoods2(names, calories, user_id) {
+  const mm = [names,calories,user_id];
+  const m=JSON.stringify(mm)
+
+  const response = await fetch("/api/insertuserfood/" + m, {
+    method: "GET",
+    headers: { "Accept": "application/json" }
+});
+  if (response.ok === true) {
+      const found = await response.json();
+      console.log("ewrgty")
+      console.log(found)
+      if (found === false)
+      {
+          alert("Выберите другое название")
+      }
+      else
+      {
+          alert("Еда добавлена")
+      }
+  }
+}
 
 
 async function insertnewuserfoods(names, calories, user_id) {
-
 
     const response = await fetch("api/insertuserfood", {
         method: "POST",
@@ -142,7 +164,7 @@ pay_page.addEventListener("click", ()=>{
       })
         .then(res => {
             // alert("Have res");
-            alert(res)
+            // alert(res)
             console.log(res)
           if (res.ok) return res.json()
           // If there is an error then make sure we catch that
@@ -154,7 +176,7 @@ pay_page.addEventListener("click", ()=>{
           window.location = url
         })
         .catch(e => {
-            alert(e.error)
+            // alert(e.error)
             // alert("Have error");
             console.log(e.error)
           console.error(e.error)

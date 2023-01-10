@@ -142,13 +142,13 @@ insertfood.addEventListener("click", ()=>{
 
     if (weight=="")
     {
-      alert('Weight field cant be empty!!')
+      alert('Поле веса должно быть заполнено!')
       return
     }
     weight=Number(weight)
     if (isNaN(weight))
     {
-      alert('In weight field must be only numbers!!')
+      alert('В поле веса должны быть только числа!')
       return
     }
     if (nickname.textContent=="Пользователь не активен")
@@ -289,13 +289,13 @@ insertuseractivity.addEventListener("click", ()=>{
 
     if (weight=="")
     {
-      alert('Activity minutes field cant be empty!!')
+      alert('Поле минут должно быть заполнено!')
       return
     }
     weight=Number(weight)
     if (isNaN(weight))
     {
-      alert('In Activity minutes must be only numbers!!')
+      alert('В поле минут должны быть заполнено!')
       return
     }
     if (nickname.textContent=="Пользователь не активен")
@@ -404,13 +404,13 @@ insertuserfoood.addEventListener("click", ()=>{
 
     if (weight=="")
     {
-      alert('Weight field cant be empty!!')
+      alert('Поле веса должно быть заполнено!')
       return
     }
     weight=Number(weight)
     if (isNaN(weight))
     {
-      alert('In weight must be only numbers!!')
+      alert('В поле веса должны быть заполнено!')
       return
     }
     podpiska=localStorage.getItem("podpiska");
@@ -482,7 +482,7 @@ async function ChangeActivity3() {
         console.log(user)
 
         result={}
-
+        result1={}
         var option = new Option("Select", "Select");
         selectUserFoood.options[selectUserFoood.options.length]=option;
 
@@ -491,12 +491,14 @@ async function ChangeActivity3() {
             console.log(user[i]);
             var option = new Option(user[i].name, user[i].id);
             result[user[i].id]=user[i].calories;
+            result1[user[i].id]=user[i].name;
             selectUserFoood.options[selectUserFoood.options.length]=option;
         }
 
 
 
         localStorage.setItem('alluserfood', JSON.stringify(result))
+        localStorage.setItem('alluserfood1', JSON.stringify(result1))
     }
 
 }

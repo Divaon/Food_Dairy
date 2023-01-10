@@ -2,6 +2,7 @@
 <html lang="en">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width/;lkjhg, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
   <title>Music Player | CodingNepal</title>
 <!-- 
   <meta name="google-signin-client_id" content="YOUR_CLIENT_ID.apps.googleusercontent.com"> -->
@@ -22,9 +23,11 @@
 
     <div class="inputuserfood" hidden="false">
       <label>Добавления в базу данных вышего продукта</label>
+      <div style="display:flex; flex-direction:row;">
       <input type="name" id="foodname" class="login-input" placeholder="Имя">
-      <input type="name" id="foodcalories" class="login-input" placeholder="Калорийност  на 100 грамм">
-      <input type="submit" value="Добавить новый продукт" id="addnewfood" class="login-button">
+      <input type="name" id="foodcalories" class="login-input" placeholder="Калорийность на 100 грамм" style="width:250px;">
+      <button  type="submit"  id="addnewfood" class="btn login-button" >Добавить новый продукт</button>
+      </div>
     </div>
 
 
@@ -41,7 +44,7 @@
 
       <!-- <a href="https://buy.stripe.com/test_14keWo6xj44Agko000">Pay on payment page</a> -->
       <p></p>
-      <button type="button" id="pay_page"  class="btn" hidden="false">Pay on payment page</button>
+      <button type="button" id="pay_page"  class="btn" hidden="false">Оплата подписки</button>
 
     <script language="JavaScript" src="podpiska.js"></script>
     

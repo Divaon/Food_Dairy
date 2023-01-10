@@ -33,6 +33,9 @@ foodnameobject=JSON.parse(localStorage.getItem('allnamefood'))
 // localStorage.setItem('alluserfood', JSON.stringify(result))
 fooduserobject=JSON.parse(localStorage.getItem('alluserfood'))
 
+// localStorage.setItem('alluserfood1', JSON.stringify(result1))
+fooduserobjectname=JSON.parse(localStorage.getItem('alluserfood1'))
+
 userweight=localStorage.getItem('userweight')
 // console.log('hmm')
 // console.log(activityobject)
@@ -61,16 +64,21 @@ var nicknames=localStorage.getItem('username')
 
  weekfoodgr=document.querySelector("#weekfood")
 
-weekfoodgr.width=300;
+weekfoodgr.width=1000;
 weekfoodgr.height=300;
 var ctx=weekfoodgr.getContext('2d');
 
 dayfoodgr=document.querySelector("#dayfood")
 
-dayfoodgr.width=300;
+dayfoodgr.width=500;
 dayfoodgr.height=300;
-var ctx2=weekfoodgr.getContext('2d');
+var ctx2=dayfoodgr.getContext('2d');
 
+monthfoodgr=document.querySelector("#monthfood")
+
+monthfoodgr.width=1500;
+monthfoodgr.height=300;
+var ctx2=monthfoodgr.getContext('2d');
 
 
 
@@ -169,6 +177,154 @@ var Barchart = function(options){
         }
  
     }
+
+
+    this.draw1 = function(){
+        var maxValue = 0;
+        for (var categ in this.options.data){
+            maxValue = Math.max(maxValue,this.options.data[categ]);
+        }
+        var canvasActualHeight = this.canvas.height - this.options.padding * 2;
+        var canvasActualWidth = this.canvas.width - this.options.padding * 2;
+        //drawing the grid lines 
+        var gridValue = 0;
+        while (gridValue <= maxValue){
+            var gridY = canvasActualHeight * (1 - gridValue/maxValue) + this.options.padding;
+            drawLine(
+                this.ctx,
+                0,
+                gridY,
+                this.canvas.width,
+                gridY,
+                this.options.gridColor
+            );
+            
+            //writing grid markers 
+            this.ctx.save();
+            this.ctx.fillStyle = "#052403";
+            this.ctx.font = "bold 10px Arial";
+            this.ctx.fillText(gridValue, 10,gridY - 2);
+            this.ctx.restore();
+            gridValue+=this.options.gridScale;
+        }
+ 
+        //drawing the bars 
+        var barIndex = 0;
+        var numberOfBars = Object.keys(this.options.data).length;
+        var barSize = (canvasActualWidth)/numberOfBars;
+        for (categ in this.options.data){
+            var val = this.options.data[categ];
+            var barHeight = Math.round( canvasActualHeight * val/maxValue) ;
+            drawBar(
+                this.ctx,
+                this.options.padding + barIndex * barSize,
+                this.canvas.height - barHeight - this.options.padding,
+                barSize,
+                barHeight,
+                this.colors[barIndex%this.colors.length]
+            );
+            barIndex++;
+        }
+
+        this.ctx.save();
+        this.ctx.textBaseline="bottom";
+        this.ctx.textAlign="center";
+        this.ctx.fillStyle = "#000000";
+        this.ctx.font = "bold 14px Arial";
+        this.ctx.fillText(this.options.seriesName, this.canvas.width/2,this.canvas.height);
+        this.ctx.restore(); 
+
+
+        barIndex = 0;
+        var legend = document.querySelector("#legendmonthfood");
+        // var ul = document.createElement("ul");
+        // legend.append(ul);
+        // for (categ in this.options.data){
+        //     var li = document.createElement("li");
+        //     li.style.listStyle = "none";
+        //     li.style.borderLeft = "20px solid "+this.colors[barIndex%this.colors.length];
+        //     li.style.padding = "5px";
+        //     li.textContent = categ;
+        //     ul.append(li);
+        //     barIndex++;
+        // }
+ 
+    }
+
+    this.draw3 = function(){
+        var maxValue = 0;
+        for (var categ in this.options.data){
+            maxValue = Math.max(maxValue,this.options.data[categ]);
+        }
+        var canvasActualHeight = this.canvas.height - this.options.padding * 2;
+        var canvasActualWidth = this.canvas.width - this.options.padding * 2;
+        //drawing the grid lines 
+        var gridValue = 0;
+        while (gridValue <= maxValue){
+            var gridY = canvasActualHeight * (1 - gridValue/maxValue) + this.options.padding;
+            drawLine(
+                this.ctx,
+                0,
+                gridY,
+                this.canvas.width,
+                gridY,
+                this.options.gridColor
+            );
+            
+            //writing grid markers 
+            this.ctx.save();
+            this.ctx.fillStyle = "#052403";
+            this.ctx.font = "bold 10px Arial";
+            this.ctx.fillText(gridValue, 10,gridY - 2);
+            this.ctx.restore();
+            gridValue+=this.options.gridScale;
+        }
+ 
+        //drawing the bars 
+        var barIndex = 0;
+        var numberOfBars = Object.keys(this.options.data).length;
+        var barSize = (canvasActualWidth)/numberOfBars;
+        for (categ in this.options.data){
+            var val = this.options.data[categ];
+            var barHeight = Math.round( canvasActualHeight * val/maxValue) ;
+            drawBar(
+                this.ctx,
+                this.options.padding + barIndex * barSize,
+                this.canvas.height - barHeight - this.options.padding,
+                barSize,
+                barHeight,
+                this.colors[barIndex%this.colors.length]
+            );
+            barIndex++;
+        }
+
+        this.ctx.save();
+        this.ctx.textBaseline="bottom";
+        this.ctx.textAlign="center";
+        this.ctx.fillStyle = "#000000";
+        this.ctx.font = "bold 14px Arial";
+        this.ctx.fillText(this.options.seriesName, this.canvas.width/2,this.canvas.height);
+        this.ctx.restore(); 
+
+
+        barIndex = 0;
+        var legend = document.querySelector("#legenddayfood");
+        var ul = document.createElement("ul");
+        legend.append(ul);
+        for (categ in this.options.data){
+            var li = document.createElement("li");
+            li.style.listStyle = "none";
+            li.style.borderLeft = "20px solid "+this.colors[barIndex%this.colors.length];
+            li.style.padding = "5px";
+            li.textContent = categ;
+            ul.append(li);
+            barIndex++;
+        }
+ 
+    }
+
+
+
 }
 
 var myweekfoodcalories = {
@@ -194,14 +350,6 @@ async function GetFoodWeek(userid) {
         now.setDate(now.getDate()-6)
         month=now.getMonth();
         finalemonth=namemonth[month]
-
-        for (let i=0; i<7; i++)
-        {
-            
-        }
-
-
-
 
         for (let i=0; i<7; i++)
         {
@@ -354,7 +502,7 @@ GetUserId(nicknames).then(
                     colors:["#a55ca5","#67b6c7", "#bccd7a","#eb9743", "#459743", "#eb2443", "#052443"]
                 }
             );
-            myBarchart.draw();
+            myBarchart.draw3();
             }
         )
     }
@@ -374,12 +522,12 @@ async function UserInfo(name) {
         const user = await response.json();
         var cc=0;
         var cc1=0;
-        console.log("check user");
-        console.log(user);
+        // console.log("check user");
+        // console.log(user);
         pol="male";
 
 
-        console.log(user[0])
+        // console.log(user[0])
 
         if (user[0].pol)
         {
@@ -395,16 +543,16 @@ async function UserInfo(name) {
             cc1=cc-250
         }
         var text=""
-        console.log(user[0].pol)
+        // console.log(user[0].pol)
         // alert(cc)
         // alert(cc1)
         if (cc<1000)
         {
-            text='Мы не смогли посчитать. Проферте информацию о себе.';
+            text='Мы не смогли посчитать. Проверьте информацию о себе.';
         }
         else
         {
-            text='Без активности: чтобы держать вес нужно потреблять в среднеем '+cc+" и чтобы начать терять вес нужно потреблять "+cc1;
+            text='Без активности: чтобы держать вес нужно потреблять в среднем '+cc+" и чтобы начать терять вес нужно потреблять "+cc1;
         }
         // return text;
         var aims=document.querySelector("#aims");
@@ -486,9 +634,9 @@ async function GetFoodsinul(userid) {
     if (response.ok === true) {
         
         const user = await response.json();
-        console.log("l;OKJHGFHD")
-        console.log(foodnameobject)
-        console.log(foodobject)
+        // console.log("l;OKJHGFHD")
+        // console.log(foodnameobject)
+        // console.log(foodobject)
 
         for (j=0; j<user.length; j++)
         {
@@ -504,7 +652,9 @@ async function GetFoodsinul(userid) {
             else
             {
                 calories=user[j].weight*fooduserobject[user[j].food_id]/100
-                name=fooduserobjectp[user[j].food_id].name
+                // console.log("qwertyuiop[]asdfghjkl;'")
+                // console.log(fooduserobjectname)
+                name=fooduserobjectname[user[j].food_id]+", что было добавлено в бд вами,"
             }
 
             temp1=date.getDate()
@@ -521,7 +671,7 @@ async function GetFoodsinul(userid) {
             }
             d=temp1+'.'+temp2+'.'+temp3
 
-            const text="Вы съели "+name+" весом " +user[j].weight+" грамм, с итоговой каларийностью "+calories+ " и дата тогда была "+d
+            const text="Вы съели "+name+" весом " +user[j].weight+" грамм, с итоговой калорийностью "+calories+ " и дата тогда была "+d
             lielement.innerHTML=text;
             ulelement.append(lielement);
             let pelement=document.createElement('p');
@@ -548,8 +698,8 @@ async function GetActivityiesinul(userid) {
     if (response.ok === true) {
         const user = await response.json();
 
-        console.log("lkjhuiygtfrdedftghjmk,lm")
-        console.log(activityobject1)
+        // console.log("lkjhuiygtfrdedftghjmk,lm")
+        // console.log(activityobject1)
 
         for (let j=0; j<user.length; j++)
         { 
@@ -582,5 +732,97 @@ async function GetActivityiesinul(userid) {
         }
 
         return 
+    }
+}
+
+
+
+monthfoodgr=document.querySelector("#monthfood")
+
+GetUserId(nicknames).then(
+    function(result)
+    {
+        // console.log("Try get food portions with user id "+result)
+        GetFoodMonth(result).then(
+            function(result)
+            {
+                console.log("sdfg")
+                console.log(result)
+                var myBarchart = new Barchart(
+                    {
+                        canvas:monthfoodgr,
+                        seriesName:"Калории за месяц",
+                        padding:20,
+                        gridScale:100,
+                        gridColor:"#eeeeee",
+                        data:result,
+                        colors:["#a55ca5","#67b6c7", "#bccd7a","#eb9743", "#459743", "#eb2443", "#052443"]
+                    }
+            );
+            myBarchart.draw1();
+            }
+        )
+    }
+);
+
+
+var mymonthfoodcalories = {
+
+};
+
+async function GetFoodMonth(userid) {
+    const response = await fetch("/api/getfoodportionsid/"+userid, {
+        method: "GET",
+        headers: { "Accept": "application/json" }
+    });
+    if (response.ok === true) {
+
+        namemonth=[" января", " февраля", " марта", " апреля", " мая", " июня", " июля", " августа", " сентября", " октебря", " ноября", " декабря"]
+
+        // console.log("responce is ok")
+        const user = await response.json();
+        // console.log(user)
+        now = new Date();
+        now.setDate(now.getDate()-30)
+        month=now.getMonth();
+        finalemonth=namemonth[month]
+
+        for (let i=0; i<31; i++)
+        {
+            mymonthfoodcalories[String(now.getDate())+finalemonth] = 0;
+            // console.log(myweekfoodcalories);
+
+            for (let j=0; j<user.length; j++)
+            {   
+                tempdate=new Date(user[j].dates)
+
+                if (now.toDateString() == tempdate.toDateString())
+                {
+                    // console.log("Совпадение найдено")
+                    calories=0
+                    if (user[j].type == "norm")
+                    {
+                        calories=user[j].weight*foodobject[user[j].food_id]/100
+                        // console.log("calories= "+ calories)
+                    } 
+                    else
+                    {   
+                        calories=user[j].weight*fooduserobject[user[j].food_id]/100
+                        // console.log("Нас здесь покат не должно быть")
+                    }
+                    newlegendname=String(now.getDate())+finalemonth
+                    mymonthfoodcalories[now.getDate()+finalemonth] = mymonthfoodcalories[now.getDate()+finalemonth]+calories ;
+                    console.log(now.getDate()+finalemonth)
+                }
+
+
+            }
+            now.setDate(now.getDate()+1)
+            month=now.getMonth();
+            finalemonth=namemonth[month]
+        }
+        // console.log('Result')
+        // console.log(myweekfoodcalories)
+        return mymonthfoodcalories
     }
 }

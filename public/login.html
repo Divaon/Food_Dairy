@@ -16,28 +16,26 @@
   <h1 class="login-title">Привет!</h1>
   <div class="login">
     <div>
-      <input type="submit" value="Вернуться на стартовую страницу" id="return" class="login-button">
+      <button  type="submit" id="return"  class="btn" >Вернуться на стартовую страницу</button>
     </div>
 
     <div>
-      <label for="nick">Ведите свой ник</label>
+      <label for="nick">Введите свой ник</label>
       <input type="nick" id="nick" class="login-input" placeholder="Ваш ник">
     </div>
     <div>
-      <label for="password">Ведите пароль</label>
+      <label for="password">Введите пароль</label>
       <input type="password" id="password" class="login-input" placeholder="Ваш пароль">
     </div>
     <div>
-      <input type="submit" value="Вход" id="logining" class="login-button">
+      <button type="submit" id="logining" class="login-button" class="btn" >Вход</button>
+      <button type="button" id="changepassword_page" class="btn" >Сброс пароля</button>
     </div>
 
 
 
   </div>
 
-  <form action="/changepassword_page">
-    <button type="button" id="changepassword_page" class="btn" >Сброс пароля</button>
-  </form>
 
 
     <script language="JavaScript" src="login_page.js"></script>

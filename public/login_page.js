@@ -44,7 +44,7 @@ function register(){
     }
     else
     {
-      alert("Nick or password unright");
+      alert("Ник или пароль неверны");
     }
 
  

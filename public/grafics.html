@@ -15,11 +15,11 @@
     nav ul{overflow: hidden; overflow-y: scroll;}
   </style>   -->
 
-  <!-- <link rel="stylesheet" href="style.css"> -->
+  <link rel="stylesheet" href="style.css">
 
   <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"> -->
 <body>
-  <div class="wrapper">
+  <div class="wrapper1">
     <form action="/home_page">
         <button type="button" id="home_page"  class="btn">Предыдушая страница</button>
     </form>
@@ -28,12 +28,21 @@
 
 
 
-    <div class="grafics">
-        <canvas id="weekfood"></canvas>
-        <legend for="weekfood" id="legendweekfood"></legend>
+    <div class="grafics" style="display: flex; justify-content: center; flex-direction: column;">
 
-        <canvas id="dayfood"></canvas>
-        <legend for="dayfood" id="legenddayfood"></legend>
+      <canvas id="monthfood" style="display: flex; justify-content: center;"></canvas>
+      <legend for="monthfood" id="legendmonthfood"></legend>
+      <div style="display:flex; flex-direction:row; align-items: center; justify-content: center;">
+        <canvas id="weekfood" ></canvas>
+        <legend for="weekfood" id="legendweekfood"></legend>
+      </div>
+
+      <div style="display:flex; flex-direction:row;align-items: center; justify-content: center;"">
+      <canvas id="dayfood"></canvas>
+      <legend for="dayfood" id="legenddayfood"></legend>
+    </div>
+
+
 
       </div>
 
@@ -43,16 +52,20 @@
     <p class="name" id="caloriesactivitytoday">Вы потратили активной деятельностью калорий:</p>
     <p class="name" id="aims">Калории сегодня:</p>
 
+    <label style="font-weight: 700; font-size:30px;">Дневник питания</label>
+    <ul type="activity" id="allfood" class="allfood">
+
+    </ul>
+  
+    <label style="font-weight: 700; font-size:30px;">Дневник активностей</label>
+    <ul type="activity" id="allactivity" class="allactivity" >
+  
+    </ul>
+
   </div>
 
 
-  <ul id="allfood" class="allfood" style="height: 100px; width: 300px; overflow: hidden; overflow-y: scroll; ">
 
-  </ul>
-
-  <ul id="allactivity" class="allactivity" style="height: 100px; width: 300px; overflow: hidden; overflow-y: scroll; ">
-
-  </ul>
 
 
 </body>
